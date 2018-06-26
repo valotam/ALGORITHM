@@ -1,0 +1,95 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "linux": {
+                "command": "sh",
+                "args": [
+                    "-c",
+                    "mkdir -p ${fileDirname}/bin",
+                    "&",
+                    "g++",
+                    "-g",
+                    "--std=c++17",
+                    "${fileDirname}/${fileBasenameNoExtension}.cpp",
+                    "-o", "${fileDirname}/bin/${fileBasenameNoExtension}"
+                ]
+            },
+            "windows": {
+                "command": "cmd",
+                "args": [
+                    "/C",
+                    "IF not exist",
+                    "bin",
+                    "(mkdir",
+                    "${fileDirname}\\bin)",
+                    "&",
+                    "g++",
+                    "-g",
+                    "--std=c++17",
+                    "${fileDirname}/${fileBasenameNoExtension}.cpp",
+                    "-o", "${fileDirname}/bin/${fileBasenameNoExtension}"
+                ]
+            },
+            "osx": {
+                "command": "sh",
+                "args": [
+                    "-c",
+                    "mkdir -p ${fileDirname}/bin",
+                    "&",
+                    "g++",
+                    "-g",
+                    "--std=c++17",
+                    "${fileDirname}/${fileBasenameNoExtension}.cpp",
+                    "-o", "${fileDirname}/bin/${fileBasenameNoExtension}}"
+                ]
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "linux": {
+                "command": "rm",
+                "args": [
+                    "-rfv",
+                    "${fileDirname}/bin/*"
+                ]
+            },
+            "windows": {
+                "command": "del",
+                "args": [
+                    "/S",
+                    "/Q",
+                    "${fileDirname}\\bin\\*"
+                ]
+            },
+            "osx": {
+                "command": "rm",
+                "args": [
+                    "-rfv",
+                    "${fileDirname}/bin/*"
+                ]
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        }
+    ]
+}
