@@ -24,7 +24,7 @@
                 "args": [
                     "/C",
                     "IF not exist",
-                    "bin",
+                    "${fileDirname}\\bin",
                     "(mkdir",
                     "${fileDirname}\\bin)",
                     "&",
