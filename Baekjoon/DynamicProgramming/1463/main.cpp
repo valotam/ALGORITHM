@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unordered_map>
 #include <vector>
 #include <algorithm>
 
@@ -9,8 +10,6 @@ class finder
 private:
     const unsigned int _num_input;
     int _count_operated;
-public:
-    finder *next[3];
 public:
     finder(const int num_in) : _num_input(num_in)
     {
@@ -29,7 +28,9 @@ void finder::cal()
 {
     _count_operated = 0;
 
+    unordered_map<int, int> list_unique;
     vector<int> list_searched;
+    list_unique.insert({1, 0});
     list_searched.push_back(1);
 
     int ii_start = 0;
@@ -38,7 +39,7 @@ void finder::cal()
 
     while(ii_start < list_searched.size()){
         int size_of_level = 0;
-                
+
         for(int ii = ii_start; ii < ii_last; ii++)
         {
             if (list_searched[ii] == _num_input)
@@ -49,22 +50,22 @@ void finder::cal()
             else
             {
                 int value = list_searched[ii] + 1;
-                auto it = find(list_searched.begin(), list_searched.end(), value);
-                if (it == list_searched.end() && value <= _num_input)
+                bool is_visited = list_unique.insert({ value, ii }).second;
+                if (is_visited && value <= _num_input)
                 {
                     list_searched.push_back(value);
                     size_of_level++;
                 }
                 value = list_searched[ii] * 2;
-                it = find(list_searched.begin(), list_searched.end(), value);
-                if (it == list_searched.end() && value <= _num_input)
+                is_visited = list_unique.insert({ value, ii }).second;
+                if (is_visited && value <= _num_input)
                 {
                     list_searched.push_back(value);
                     size_of_level++;
                 }
                 value = list_searched[ii] * 3;
-                it = find(list_searched.begin(), list_searched.end(), value);
-                if (it == list_searched.end() && value <= _num_input)
+                is_visited = list_unique.insert({ value, ii }).second;
+                if (is_visited && value <= _num_input)
                 {
                     list_searched.push_back(value);
                     size_of_level++;
